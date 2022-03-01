@@ -15,16 +15,20 @@
 <body>
 	<!-- Header -->
 	<header class="container">
-		<h3 class="text-center my-4">Phone Chaser</h3>
+		<h2 class="text-center my-4 fw-bold">Phone Chaser</h2>
 	</header>
 	
 	<main>
 		<!-- Search Box Section -->
-		<section class="container">
+		<section class="container my-4">
 			<div class="input-group mb-3 w-50 mx-auto">
 				<input id="search-field" type="text" class="form-control" placeholder="Search Your Favourite Phone" aria-label="Search Your Favourite Phone" aria-describedby="button-addon2">
 				<button class="btn btn-outline-secondary" type="button" id="button-search" onclick="loadSearchResult()">Search</button>
-			  </div>
+			</div>
+
+			<div>
+				<h5 id="search-not-found" class="fs-6 text-center">No Phone Founded!!!</h5>
+			</div>
 		</section>
 
 		<!-- Search Result Details Seciton -->
@@ -33,8 +37,9 @@
 		</section>
 
 		<!-- Search Result Section -->
-		<section class="container">
-
+		<section class="container my-5">
+			<div id="result-card" class="row row-cols-1 row-cols-md-3 g-4">
+			  </div>
 		</section>
 	</main>
 
