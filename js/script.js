@@ -11,10 +11,12 @@ const loadSearchResult = () => {
 const displaySearchResult = (data) => {
 	const container = document.getElementById('result-card');
 	document.getElementById('search-not-found').style.display = 'none';
+	document.getElementById('phone-details').style.display = 'none';
 
 	if(data.length === 0){
 		document.getElementById('search-not-found').style.display = 'block';
 	}
+
 	container.textContent = ``;
 	data.forEach(d => {
 		const div = document.createElement('div');
@@ -27,9 +29,6 @@ const displaySearchResult = (data) => {
 			<button class="btn btn-dark w-50  mx-auto mb-4" onclick="loadPhoneDetails('${d.slug}')">Explore</button>
 	  	</div>
 		`;
-		// fetch(`https://openapi.programming-hero.com/api/phone/${d.slug}`)
-		// .then(res => res.json())
-		// .then(d => console.log(d.data));
 		container.appendChild(div);
 
 	});
@@ -48,10 +47,13 @@ const loadPhoneDetails = (phoneId) => {
 const displayPhoneDetails = (data) => {
 	const container = document.getElementById('phone-details');
 	container.textContent = ``;
+	
 	document.getElementById('phone-details').style.display = 'block';
+	
 	const div = document.createElement('div');
 	div.classList.add('card');
 	div.classList.add('mb-3');
+	div.classList.add('pb-5');
 	div.innerHTML = `
 		<img src="${data.image}" class="card-img-top w-25 mx-auto my-5" alt="...">
 		<div class="card-body">
@@ -59,7 +61,6 @@ const displayPhoneDetails = (data) => {
 			<h5 class="mx-auto mb-4 fs-6 text-center">Brand: ${data.brand}</h5>
 	  		<p class="card-text text-center"><small class="text-muted">${data.releaseDate? data.releaseDate : 'No release date found'}</small></p>
 		</div>
-
 		<div class="accordion w-75 mx-auto" id="accordionPanelsStayOpenExample">
 			<div class="accordion-item">
 			  	<h2 class="accordion-header" id="panelsStayOpen-headingOne">
@@ -77,20 +78,32 @@ const displayPhoneDetails = (data) => {
 					</div>
 			  	</div>
 			</div>
-			<div class="accordion-item">
-			  	<h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-					<button class="accordion-button bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-					  Others
-					</button>
-			  	</h2>
-			  	<div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
-					<div class="accordion-body">
-					 
-					</div>
-			  	</div>
-			</div>
 	  </div>
 	`;
-	// console.log(data.others);
+	
+	// Others properties checking
+	if(data.others !== undefined){
+		div.innerHTML += `
+		<div class="accordion w-75 mx-auto" id="accordionPanelsStayOpenExample">
+				<div class="accordion-item">
+				  	<h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+						<button class="accordion-button bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+						  Others
+						</button>
+				  	</h2>
+				  	<div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
+						<div class="accordion-body">
+						<li><strong>WLAN: </strong>${data.others.WLAN}</li>
+						<li><strong>Bluetooth: </strong>${data.others.Bluetooth}</li>
+						<li><strong>GPS: </strong>${data.others.GPS}</li>
+						<li><strong>NFC: </strong>${data.others.NFC}</li>
+						<li><strong>Radio: </strong>${data.others.Radio}</li>
+						<li><strong>USB: </strong>${data.others.USB}</li>
+						</div>
+				  	</div>
+				</div>
+			</div>
+		`;
+	}
 	container.appendChild(div);
 }
