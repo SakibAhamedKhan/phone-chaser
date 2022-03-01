@@ -5,13 +5,26 @@
 	display: none;
 }
 
+/* Spinner section  */
+#spinnner-below-search{
+	display: none;
+}
+
+
+/* Search Result Section */
+#load-more-button{
+	display: none;
+}
 
 /* Phone Details */
 #phone-details{
 	display: none;
 }
 
-
+/* Load More Below Section */
+#spinnner-below-load-more{
+	display: none;
+}
 
 /* Media Query */
 @media (max-width: 600px) {

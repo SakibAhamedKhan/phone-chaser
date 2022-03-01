@@ -32,25 +32,37 @@
 			</div>
 		</section>
 
+		<section id="spinnner-below-search" class="container mx-auto my-5">
+			<div class="d-flex justify-content-center">
+				<div class="spinner-border text-dark text-center" role="status">
+					<span class="visually-hidden">Loading...</span>
+				</div>
+			</div>
+		</section>
+
 		<!-- Search Result Details Seciton -->
 		<section class="container">
 			<div id="phone-details">
-				<div class="card mb-3">
-					<img src="..." class="card-img-top" alt="...">
-					<div class="card-body">
-					  <h5 class="card-title">Card title</h5>
-					  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-					  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-					</div>
-				  </div>
+				
 			</div>
 		</section>
 
 		<!-- Search Result Section -->
-		<section class="container my-5">
-			<div id="result-card" class="row row-cols-1 row-cols-md-3 g-4">
-			  </div>
+		<section class="container my-5" id="search-result">
+			<div id="result-card" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+			</div>
+			<div class="d-flex justify-content-center my-5" >
+				<button class="btn btn-dark py-2 px-3" id="load-more-button" onclick="loadSearchResult(false)">Load More</button>
+			</div>
 		</section>
+		<section id="spinnner-below-load-more" class="container mx-auto my-5">
+			<div class="d-flex justify-content-center">
+				<div class="spinner-border text-dark text-center" role="status">
+					<span class="visually-hidden">Loading...</span>
+				</div>
+			</div>
+		</section>
+
 	</main>
 
 	<!-- External JS -->
