@@ -1,5 +1,22 @@
 
 /* Search Box Section */
+
 #search-not-found{
 	display: none;
+}
+
+
+/* Phone Details */
+#phone-details{
+	display: none;
+}
+
+
+
+/* Media Query */
+@media (max-width: 600px) {
+	#search{
+		width: 75% !important;
+	}
+	
 }

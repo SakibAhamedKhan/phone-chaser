@@ -1,4 +1,4 @@
-// LoardSearchResult
+// Loard Search Result
 const loadSearchResult = () => {
 	const searchText = document.getElementById('search-field').value;
 	const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
@@ -7,11 +7,11 @@ const loadSearchResult = () => {
 	.then(data => displaySearchResult(data.data));
 };
 
-// DisplaySearchResult
+// Display Search Result
 const displaySearchResult = (data) => {
 	const container = document.getElementById('result-card');
 	document.getElementById('search-not-found').style.display = 'none';
-	
+
 	if(data.length === 0){
 		document.getElementById('search-not-found').style.display = 'block';
 	}
@@ -22,12 +22,75 @@ const displaySearchResult = (data) => {
 		div.innerHTML = `
 		<div class="card h-100">
 			<img src="${d.image}" class="card-img-top w-25 mx-auto my-4" alt="">
-			<h4 class="mx-auto mt-4">${d.phone_name}</h4>
-			<h5 class="mx-auto mb-4">${d.brand}</h5	>
-			<button class="btn btn-dark w-50  mx-auto mb-4">Explore</button>
+			<h4 class="mx-auto mt-4 fs-4">${d.phone_name}</h4>
+			<h5 class="mx-auto mb-4 fs-6">Brand: ${d.brand}</h5	>
+			<button class="btn btn-dark w-50  mx-auto mb-4" onclick="loadPhoneDetails('${d.slug}')">Explore</button>
 	  	</div>
 		`;
+		// fetch(`https://openapi.programming-hero.com/api/phone/${d.slug}`)
+		// .then(res => res.json())
+		// .then(d => console.log(d.data));
 		container.appendChild(div);
 
 	});
+};
+
+
+//Load Phone Details
+const loadPhoneDetails = (phoneId) => {
+	const url = `https://openapi.programming-hero.com/api/phone/${phoneId}`;
+	fetch(url)
+	.then(response => response.json())
+	.then(data => displayPhoneDetails(data.data));
+};
+
+//Display Phone Details
+const displayPhoneDetails = (data) => {
+	const container = document.getElementById('phone-details');
+	container.textContent = ``;
+	document.getElementById('phone-details').style.display = 'block';
+	const div = document.createElement('div');
+	div.classList.add('card');
+	div.classList.add('mb-3');
+	div.innerHTML = `
+		<img src="${data.image}" class="card-img-top w-25 mx-auto my-5" alt="...">
+		<div class="card-body">
+	  		<h4 class="card-title text-center mt-4 fs-4">${data.name}</h4>
+			<h5 class="mx-auto mb-4 fs-6 text-center">Brand: ${data.brand}</h5>
+	  		<p class="card-text text-center"><small class="text-muted">${data.releaseDate? data.releaseDate : 'No release date found'}</small></p>
+		</div>
+
+		<div class="accordion w-75 mx-auto" id="accordionPanelsStayOpenExample">
+			<div class="accordion-item">
+			  	<h2 class="accordion-header" id="panelsStayOpen-headingOne">
+					<button class="accordion-button bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+					  Main Features
+					</button>
+			  	</h2>
+			  	<div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+					<div class="accordion-body">
+					  <li><strong>Display Size: </strong>${data.mainFeatures.displaySize}</li>
+					  <li><strong>Chipset: </strong>${data.mainFeatures.chipSet}</li>
+					  <li><strong>Memory: </strong>${data.mainFeatures.memory}</li>
+					  <li><strong>Storage: </strong>${data.mainFeatures.storage}</li>
+					  <li><strong>Sensors: </strong>${data.mainFeatures.sensors}</li>
+					</div>
+			  	</div>
+			</div>
+			<div class="accordion-item">
+			  	<h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+					<button class="accordion-button bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+					  Others
+					</button>
+			  	</h2>
+			  	<div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
+					<div class="accordion-body">
+					 
+					</div>
+			  	</div>
+			</div>
+	  </div>
+	`;
+	// console.log(data.others);
+	container.appendChild(div);
 }
