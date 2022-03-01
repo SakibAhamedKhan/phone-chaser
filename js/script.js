@@ -1,24 +1,29 @@
 // Loard Search Result
-const loadSearchResult = (condition=true) => {
-	displayOrHideElement('spinnner-below-search', 'block');
+const loadSearchResult = (condition=true, search) => {
 	displayOrHideElement('search-not-found', 'none');
 	displayOrHideElement('phone-details', 'none');
 	displayOrHideElement('load-more-button', 'none');
+	
+	let searchText = document.getElementById('search-field').value;
+
 	if(condition===true){
 		document.getElementById('result-card').textContent = ``;
+		displayOrHideElement('spinnner-below-search', 'block');
 	} else{
 		displayOrHideElement('spinnner-below-load-more', 'block');
+		searchText = search;
 	}
 
-	const searchText = document.getElementById('search-field').value;
+	document.getElementById('search-field').value = '';
+
 	const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
 	fetch(url)
 	.then(response => response.json())
-	.then(data => displaySearchResult(data.data, condition));
+	.then(data => displaySearchResult(data.data, condition, searchText));
 };
 
 // Display Search Result
-const displaySearchResult = (data, condition) => {
+const displaySearchResult = (data, condition, searchText) => {
 	const container = document.getElementById('result-card');
 	
 	// Spinner hide after load result
@@ -33,6 +38,10 @@ const displaySearchResult = (data, condition) => {
 	container.textContent = ``;
 	
 	const lenghtOfResult = data.length;
+
+	if(lenghtOfResult>20){
+		document.getElementById('load-more-button').setAttribute('onclick',`loadSearchResult(false,'${searchText}')`);
+	}
 
 	//Load More Button Show and Hide Codition
 	if(lenghtOfResult>20 && condition === true){
